@@ -7,12 +7,14 @@ var draw = function() {
 
     c.beginPath();
     c.arc(75, 75, 50, 0, Math.PI*2, true); //head
-    c.moveTo(110,75);
-    c.arc(75, 75, 35, 0, Math.PI, false); //smile
+    c.moveTo(55,85);
+    c.arc(75, 85, 20, 0, Math.PI, false); //mouth
     c.moveTo(65, 65);
     c.arc(60, 65, 5, 0, Math.PI*2, true); //left eye
     c.moveTo(95, 65);
     c.arc(90, 65, 5, 0, Math.PI*2, true); //right eye
+    c.moveTo(110,115);
+    c.arc(75, 115, 35, 0, Math.PI, true); //moustache
     c.stroke();
 
 
