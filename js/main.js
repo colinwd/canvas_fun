@@ -3,18 +3,21 @@ function draw() {
   if (canvas.getContext){
     var c = canvas.getContext('2d');
 
-    for(var i = 0; i < 6; i++) {
-      for (var j = 0; j < 6; j++) {
-        for (var k = 0; k < 6; k++) {
-          for (var l = 0; l < 6; l++) {
-            c.fillStyle = 'rgb(' + Math.floor(255-(42.5/l)*i) + ', ' + Math.floor(255-(42.5/l)*j) + ', ' + Math.floor(255-(42.5/l)*k) + ')';
-            c.fillRect((i*25)+(k*150), (j*25)+(l*150), 25, 25);
-          }
-        }
+    c.fillStyle = 'rgb(255, 221, 0)';
+    c.fillRect(0, 0, 150, 37.5);
+    c.fillStyle = 'rgb(102, 204, 0)';
+    c.fillRect(0, 37.5, 150, 37.5);
+    c.fillStyle = 'rgb(0, 153, 255)';
+    c.fillRect(0, 75, 150, 37.5);
+    c.fillStyle = 'rgb(255, 52, 0)';
+    c.fillRect(0, 112.5, 150, 37.5);
+
+    for (var i = 0; i < 10; i++){
+      c.fillStyle = 'rgba(255, 255, 255, '+(i+1)/10 + ')';
+      for (var j = 0; j < 4; j++) {
+        c.fillRect(5 + i*14, 5 + j*37.5, 14, 27.5);
       }
     }
-
-
 
 
   } else {
