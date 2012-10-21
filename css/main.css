@@ -96,6 +96,8 @@ textarea {
 canvas {
     background-color: black;
     border: 1px solid white;
+    margin: 0 auto;
+    margin-top: 50px;
 }
 
 
