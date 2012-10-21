@@ -1,42 +1,56 @@
-function draw() {
-  var canvas = document.getElementById('awesome');
-  if (canvas.getContext) {
-    var c = canvas.getContext('2d');
+(function() {
+  Crafty.init(600, 300);
+  Crafty.background('rgb(127,127,127)');
 
-    // Create gradients
-  var radgrad = c.createRadialGradient(45,45,10,52,50,30);
-  radgrad.addColorStop(0, '#A7D30C');
-  radgrad.addColorStop(0.9, '#019F62');
-  radgrad.addColorStop(1, 'rgba(1,159,98,0)');
+  //Paddles
+  Crafty.e("Paddle, 2D, DOM, Color, Multiway")
+    .color('rgb(255,0,0)')
+    .attr({ x: 20, y: 100, w: 10, h: 50 })
+    .multiway(6, { W: -90, S: 90 } );
+  Crafty.e("Paddle, 2D, DOM, Color, Multiway")
+    .color('rgb(0,255,0)')
+    .attr({ x: 580, y: 100, w: 10, h: 50 })
+    .multiway(6, { UP_ARROW: -90, DOWN_ARROW: 90});
 
-  var radgrad2 = c.createRadialGradient(105,105,20,112,120,50);
-  radgrad2.addColorStop(0, '#FF5F98');
-  radgrad2.addColorStop(0.75, '#FF0188');
-  radgrad2.addColorStop(1, 'rgba(255,1,136,0)');
+    //Ball
+    Crafty.e("2D, DOM, Color, Collision")
+      .color('rgb(0,0,255)')
+      .attr({ x: 300, y: 150, w: 10, h: 10,
+              dX: 3,
+              dY: 3 })
+      .bind('EnterFrame', function() {
+        //hit floor or roof
+        if (this.y <= 0 || this.y >= 290) {
+          this.dY *= -1;
+        }
 
-  var radgrad3 = c.createRadialGradient(95,15,15,102,20,40);
-  radgrad3.addColorStop(0, '#00C9FF');
-  radgrad3.addColorStop(0.8, '#00B5E2');
-  radgrad3.addColorStop(1, 'rgba(0,201,255,0)');
+        if (this.x > 600) {
+          this.x = 300;
+          Crafty("LeftPoints").each(function() {
+            this.text(++this.points + " Points")
+          });
+        }
 
-  var radgrad4 = c.createRadialGradient(0,150,50,0,140,90);
-  radgrad4.addColorStop(0, '#F4F201');
-  radgrad4.addColorStop(0.8, '#E4C700');
-  radgrad4.addColorStop(1, 'rgba(228,199,0,0)');
+        if (this.x < 10) {
+          this.x = 300;
+          Crafty("RightPoints").each(function() {
+            this.text(++this.points + " Points")
+          });
+        }
 
-  // draw shapes
-  c.fillStyle = radgrad4;
-  c.fillRect(0,0,150,150);
-  c.fillStyle = radgrad3;
-  c.fillRect(0,0,150,150);
-  c.fillStyle = radgrad2;
-  c.fillRect(0,0,150,150);
-  c.fillStyle = radgrad;
-  c.fillRect(0,0,150,150);
+        this.x += this.dX;
+        this.y += this.dY;
+      })
+      .onHit('Paddle', function() {
+        this.dX *= -1;
+      })
 
+  //Score boards
+  Crafty.e("LeftPoints, DOM, 2D, Text")
+    .attr({ x: 20, y: 20, w: 100, h: 20, points: 0 })
+    .text("0 Points");
+  Crafty.e("RightPoints, DOM, 2D, Text")
+    .attr({ x: 515, y: 20, w: 100, h: 20, points: 0 })
+    .text("0 Points");
 
-
-  } else {
-    alert("fuck all yall");
-  }
-}
+})();
