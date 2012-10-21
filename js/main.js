@@ -43,6 +43,14 @@
       })
       .onHit('Paddle', function() {
         this.dX *= -1;
+
+        if (this.dX < 8) {
+          this.dX *= 1.1;
+        }
+
+        if (this.dX > 11.5) {
+          this.dX = 11.5;
+        }
       })
 
   //Score boards
